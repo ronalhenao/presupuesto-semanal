@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { Pregunta } from './components/Pregunta';
 import { Formulario } from './components/Formulario';
+import { Listado } from './components/Listado';
+import { ControlPresupuesto } from './components/ControlPresupuesto';
+
 
 export const GastoSemanal = () => {
 
     const [presupuesto, guardarPresupuesto] = useState(0);
     const [restante, guardarRestante] = useState(0);
     const [mostrarpregunta, actualizarPregunta] = useState(true);
+    const [gastos, guardarGastos] = useState([]);
+
+    // Cuando agregamos un nuevo gasto
+    const agregarNuevoGasto = gasto => {
+        guardarGastos([
+            ...gastos,
+            gasto
+        ])
+    }
 
     return (
         <div className="container">
@@ -22,11 +34,21 @@ export const GastoSemanal = () => {
                             actualizarPregunta={ actualizarPregunta }
                         />
                     :
-                        <div className="d-flex">
-                            <div class="w-50">
-                                <Formulario />
+                        <div className="row">
+                            <div className="col-12 col-md-6">
+                                <Formulario 
+                                    agregarNuevoGasto={ agregarNuevoGasto }
+                                />
                             </div>
-                            <div class="w-50">2</div>
+                            <div className="col-12 col-md-6">
+                                <Listado 
+                                    gastos={ gastos }
+                                />
+                                <ControlPresupuesto 
+                                    presupuesto={ presupuesto }
+                                    restante={ restante }
+                                />
+                            </div>
                         </div>
                 }
             </div>
